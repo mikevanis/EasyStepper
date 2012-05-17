@@ -9,6 +9,19 @@ EasyStepper::EasyStepper(int dir, int step, int ms1, int ms2, int sleep) {
 	pinMode(sleep, OUTPUT);
 }
 
+void EasyStepper::setMaxSpeed(int maxSpeed) {
+	_maxSpeed = maxSpeed;
+}
+
+void EasyStepper::setEasingAmount(int divider) {
+	_easingDivider = divider;
+}
+
+void EasyStepper::setMicrostepping(int fraction) {
+	MS1_MODE(fraction);
+	MS2_MODE(fraction);
+}
+
 int EasyStepper::MS1_MODE(int stepMode) {
 	switch(stepMode) {
 		case 1:

@@ -31,8 +31,9 @@
 class EasyStepper {
 public:
 	EasyStepper(int dir, int step, int ms1, int ms2, int sleep);
-	void setMaxSpeed(long maxSpeed);
-	void setSmoothing(int divider);
+	void setMaxSpeed(int maxSpeed);
+	void setEasingAmount(int divider);
+	void setMicrostepping(int fraction);
 	void step(int number_of_steps);
 	
 private:
@@ -43,9 +44,10 @@ private:
 	int stepsRemaining;
 	boolean antiClockwise;
 	boolean microStepping;
-	int minSpeed;
-	int maxSpeed;
+	int _minSpeed;
+	int _maxSpeed;
 	int currentSpeed;
+	int _easingDivider;
 };
 
 #endif
