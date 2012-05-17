@@ -35,7 +35,10 @@ public:
 	void setEasingAmount(int divider);
 	void setMicrostepping(int fraction);
 	void step(int number_of_steps);
+<<<<<<< HEAD
 	//void sleep();
+=======
+>>>>>>> parent of 901108c... added sleep function
 	
 private:
 	int MS1_MODE(int stepMode);

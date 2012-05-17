@@ -22,10 +22,6 @@ void EasyStepper::setMicrostepping(int fraction) {
 	MS2_MODE(fraction);
 }
 
-void EasyStepper::sleep() {
-	digitalWrite(sleep, LOW);
-}
-
 int EasyStepper::MS1_MODE(int stepMode) {
 	switch(stepMode) {
 		case 1:
