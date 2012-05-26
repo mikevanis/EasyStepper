@@ -34,11 +34,8 @@ public:
 	void setMaxSpeed(int maxSpeed);
 	void setEasingAmount(int divider);
 	void setMicrostepping(int fraction);
-	void step(int number_of_steps);
-<<<<<<< HEAD
-	//void sleep();
-=======
->>>>>>> parent of 901108c... added sleep function
+	void step(int numberOfS teps);
+
 	
 private:
 	int MS1_MODE(int stepMode);

@@ -22,6 +22,10 @@ void EasyStepper::setMicrostepping(int fraction) {
 	MS2_MODE(fraction);
 }
 
+void EasyStepper::step(int numberOfSteps) {
+	
+}
+
 int EasyStepper::MS1_MODE(int stepMode) {
 	switch(stepMode) {
 		case 1:
