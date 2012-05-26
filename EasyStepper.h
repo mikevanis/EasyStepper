@@ -41,6 +41,10 @@ private:
 	int MS1_MODE(int stepMode);
 	int MS2_MODE(int stepMode);
 	
+	// Timing
+	unsigned long previous_timer;
+	byte timer;
+	
 	int numOfSteps;
 	int stepsRemaining;
 	boolean antiClockwise;
