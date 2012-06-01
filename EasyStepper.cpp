@@ -1,10 +1,6 @@
 #include "Arduino.h"
 #include "EasyStepper.h"
 
-#define TRUE 1
-#define FALSE 0
-typedef int boolean;
-
 EasyStepper::EasyStepper(int dir, int step, int ms1, int ms2, int sleep) {
 	pinMode(dir, OUTPUT);
 	pinMode(step, OUTPUT);
@@ -12,6 +8,12 @@ EasyStepper::EasyStepper(int dir, int step, int ms1, int ms2, int sleep) {
 	pinMode(ms2, OUTPUT);
 	pinMode(sleep, OUTPUT);
 	_easingDivider = 3;
+	
+	mDir = dir;
+	mStep = step;
+	mMs1 = ms1;
+	mMs2 = ms2;
+	mSleep = sleep;
 }
 
 void EasyStepper::setMaxSpeed(int maxSpeed) {
@@ -34,25 +36,25 @@ void EasyStepper::step(int numOfSteps) {
 		// Run motor
 		if(stepsRemaining > 0) {
 			// Is it time to microstep yet?
-			if(stepsRemaining == numOfSteps/_easingDivider && !microstepping) {
+			if(stepsRemaining == numOfSteps/_easingDivider && microStepping == 0) {
 				stepsRemaining *= 8;
-				digitalWrite(ms1, MS1_MODE(8));
-				digitalWrite(ms2, MS2_MODE(8));
-				microstepping = true;
+				digitalWrite(mMs1, MS1_MODE(8));
+				digitalWrite(mMs2, MS2_MODE(8));
+				microStepping = 1;
 			}
 			else if(stepsRemaining > numOfSteps/_easingDivider) {
 				if((timer+1) % _maxSpeed == 0) {
-					digitalWrite(step, LOW);
-					digitalWrite(step, HIGH);
+					digitalWrite(mStep, LOW);
+					digitalWrite(mStep, HIGH);
 					stepsRemaining--;
 				}
 			}
 			else {
 				if((timer+1) % (currentSpeed/8) == 0) {
-					digitalWrite(step, LOW);
-					digitalWrite(step, HIGH);
+					digitalWrite(mStep, LOW);
+					digitalWrite(mStep, HIGH);
 					stepsRemaining--;
-					currentSpeed = map(stepsRemaining, numOfSteps/_easingDivider, 1, maxSpeed, minSpeed);
+					currentSpeed = map(stepsRemaining, numOfSteps/_easingDivider, 1, _maxSpeed, _minSpeed);
 				}
 			}
 		}
@@ -73,9 +75,8 @@ int EasyStepper::MS1_MODE(int stepMode) {
 		case 8:
 			stepMode = 1;
 			break;
-		}
-		return stepMode;
 	}
+	return stepMode;
 }
 
 int EasyStepper::MS2_MODE(int stepMode) {
@@ -92,7 +93,6 @@ int EasyStepper::MS2_MODE(int stepMode) {
 		case 8:
 			stepMode = 1;
 			break;
-		}
-		return stepMode;
 	}
+	return stepMode;
 }

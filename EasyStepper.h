@@ -27,6 +27,7 @@
 	Definitions
 *******************/
 
+//typedef uint8_t byte;
 
 class EasyStepper {
 public:
@@ -43,12 +44,18 @@ private:
 	
 	// Timing
 	unsigned long previous_timer;
-	byte timer;
+	unsigned long timer;
+	
+	int mDir;
+	int mStep;
+	int mMs1;
+	int mMs2;
+	int mSleep;
 	
 	int numOfSteps;
 	int stepsRemaining;
-	boolean antiClockwise;
-	boolean microStepping;
+	int antiClockwise;
+	int microStepping;
 	int _minSpeed;
 	int _maxSpeed;
 	int currentSpeed;
