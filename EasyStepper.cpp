@@ -1,6 +1,10 @@
 #include "Arduino.h"
 #include "EasyStepper.h"
 
+#define TRUE 1
+#define FALSE 0
+typedef int boolean;
+
 EasyStepper::EasyStepper(int dir, int step, int ms1, int ms2, int sleep) {
 	pinMode(dir, OUTPUT);
 	pinMode(step, OUTPUT);
