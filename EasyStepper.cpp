@@ -35,29 +35,49 @@ void EasyStepper::step(int numOfSteps) {
 		
 		// Run motor
 		if(stepsRemaining > 0) {
-			// Is it time to microstep yet?
-			if(stepsRemaining == numOfSteps/_easingDivider && microStepping == 0) {
-				stepsRemaining *= 8;
-				digitalWrite(mMs1, MS1_MODE(8));
-				digitalWrite(mMs2, MS2_MODE(8));
-				microStepping = 1;
-			}
-			else if(stepsRemaining > numOfSteps/_easingDivider) {
-				if((timer+1) % _maxSpeed == 0) {
-					digitalWrite(mStep, LOW);
-					digitalWrite(mStep, HIGH);
-					stepsRemaining--;
-				}
-			}
-			else {
-				if((timer+1) % (currentSpeed/8) == 0) {
-					digitalWrite(mStep, LOW);
-					digitalWrite(mStep, HIGH);
-					stepsRemaining--;
-					currentSpeed = map(stepsRemaining, numOfSteps/_easingDivider, 1, _maxSpeed, _minSpeed);
-				}
+			if((timer+1) % _maxSpeed == 0) {
+				digitalWrite(mStep, LOW);
+				digitalWrite(mStep, HIGH);
+				stepsRemaining--;
 			}
 		}
+	}
+}
+
+void EasyStepper::stepWithEasing(int numOfSteps, int type) {
+	switch(type) {
+		// Sine wave
+		case 0:
+			if((unsigned long)(micros() - previous_timer) >= 500) {
+				previous_timer = micros();
+		
+				// Run motor
+				if(stepsRemaining > 0) {
+					// Is it time to microstep yet?
+					if(stepsRemaining == numOfSteps/_easingDivider && microStepping == 0) {
+						stepsRemaining *= 8;
+						digitalWrite(mMs1, MS1_MODE(8));
+						digitalWrite(mMs2, MS2_MODE(8));
+						microStepping = 1;
+					}
+					else if(stepsRemaining > numOfSteps/_easingDivider) {
+						if((timer+1) % _maxSpeed == 0) {
+							digitalWrite(mStep, LOW);
+							digitalWrite(mStep, HIGH);
+							stepsRemaining--;
+						}
+					}
+					else {
+						if((timer+1) % (currentSpeed/8) == 0) {
+							digitalWrite(mStep, LOW);
+							digitalWrite(mStep, HIGH);
+							stepsRemaining--;
+							currentSpeed = map(stepsRemaining, numOfSteps/_easingDivider, 1, _maxSpeed, _minSpeed);
+						}
+					}
+				}
+			}
+			break;
 	}
 }
 
