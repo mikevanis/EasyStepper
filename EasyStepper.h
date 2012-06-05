@@ -36,6 +36,7 @@ public:
 	void setEasingAmount(int divider);
 	void setMicrostepping(int fraction);
 	void step(int numOfSteps);
+	void stepWithEasing(int numOfSteps, int type);
 
 	
 private:
