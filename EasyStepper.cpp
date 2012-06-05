@@ -1,6 +1,9 @@
 #include "Arduino.h"
 #include "EasyStepper.h"
 
+#define TRUE 1
+#define FALSE 0
+
 EasyStepper::EasyStepper(int dir, int step, int ms1, int ms2, int sleep) {
 	pinMode(dir, OUTPUT);
 	pinMode(step, OUTPUT);
@@ -22,6 +25,10 @@ void EasyStepper::setMaxSpeed(int maxSpeed) {
 
 void EasyStepper::setEasingAmount(int divider) {
 	_easingDivider = divider;
+}
+
+void EasyStepper::sleep(int state) {
+	digitalWrite(mSleep, state);
 }
 
 void EasyStepper::setMicrostepping(int fraction) {

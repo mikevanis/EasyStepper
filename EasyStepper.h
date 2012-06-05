@@ -35,6 +35,7 @@ public:
 	void setMaxSpeed(int maxSpeed);
 	void setEasingAmount(int divider);
 	void setMicrostepping(int fraction);
+	void sleep(int state);
 	void step(int numOfSteps);
 	void stepWithEasing(int numOfSteps, int type);
 
