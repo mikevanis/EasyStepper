@@ -11,7 +11,6 @@ EasyStepper::EasyStepper(int dir, int step, int ms1, int ms2, int sleep) {
 	pinMode(ms2, OUTPUT);
 	pinMode(sleep, OUTPUT);
 	
-	digitalWrite(dir, HIGH);
 	_easingDivider = 3;
 	
 	mDir = dir;
@@ -39,7 +38,14 @@ void EasyStepper::setMicrostepping(int fraction) {
 }
 
 void EasyStepper::step(int numOfSteps) {
-	stepsRemaining = numOfSteps;
+	if(numOfSteps < 0) {
+		digitalWrite(mDir, HIGH);
+		stepsRemaining = -numOfSteps;
+	}
+	else {
+		digitalWrite(mDir, LOW);
+		stepsRemaining = numOfSteps;
+	}
 }
 
 void EasyStepper::update() {
