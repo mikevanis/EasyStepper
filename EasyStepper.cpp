@@ -10,6 +10,8 @@ EasyStepper::EasyStepper(int dir, int step, int ms1, int ms2, int sleep) {
 	pinMode(ms1, OUTPUT);
 	pinMode(ms2, OUTPUT);
 	pinMode(sleep, OUTPUT);
+	
+	digitalWrite(dir, HIGH);
 	_easingDivider = 3;
 	
 	mDir = dir;
@@ -37,10 +39,14 @@ void EasyStepper::setMicrostepping(int fraction) {
 }
 
 void EasyStepper::step(int numOfSteps) {
+	stepsRemaining = numOfSteps;
+}
+
+void EasyStepper::update() {
 	if((unsigned long)(micros() - previous_timer) >= 500) {
 		previous_timer = micros();
 		
-		// Run motor
+		// Run motor if there are steps to perform
 		if(stepsRemaining > 0) {
 			if((timer+1) % _maxSpeed == 0) {
 				digitalWrite(mStep, LOW);
@@ -48,6 +54,7 @@ void EasyStepper::step(int numOfSteps) {
 				stepsRemaining--;
 			}
 		}
+		timer = (timer + 1) % 100;
 	}
 }
 
