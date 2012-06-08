@@ -40,8 +40,8 @@ public:
 	void step(int numOfSteps);
 	void update();
 	void stepWithEasing(int numOfSteps, int type);
+	int readEndStop();
 
-	
 private:
 	void init(int dir, int step, int ms1, int ms2, int sleep, int endstop);
 	int MS1_MODE(int stepMode);

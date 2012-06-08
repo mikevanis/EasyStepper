@@ -110,6 +110,10 @@ void EasyStepper::stepWithEasing(int numOfSteps, int type) {
 	}
 }
 
+int EasyStepper::readEndStop() {
+	return analogRead(mEndStop);
+}
+
 int EasyStepper::MS1_MODE(int stepMode) {
 	switch(stepMode) {
 		case 1:
