@@ -32,6 +32,7 @@
 class EasyStepper {
 public:
 	EasyStepper(int dir, int step, int ms1, int ms2, int sleep);
+	EasyStepper(int dir, int step, int ms1, int ms2, int sleep, int endstop);
 	void setMaxSpeed(int maxSpeed);
 	void setEasingAmount(int divider);
 	void setMicrostepping(int fraction);
@@ -42,6 +43,7 @@ public:
 
 	
 private:
+	void init(int dir, int step, int ms1, int ms2, int sleep, int endstop);
 	int MS1_MODE(int stepMode);
 	int MS2_MODE(int stepMode);
 	
@@ -54,6 +56,7 @@ private:
 	int mMs1;
 	int mMs2;
 	int mSleep;
+	int mEndStop;
 	
 	int numOfSteps;
 	int stepsRemaining;

@@ -5,6 +5,14 @@
 #define false 0
 
 EasyStepper::EasyStepper(int dir, int step, int ms1, int ms2, int sleep) {
+	init(dir, step, ms1, ms2, sleep, -1);
+}
+
+EasyStepper::EasyStepper(int dir, int step, int ms1, int ms2, int sleep, int endstop) {
+	init(dir, step, ms1, ms2, sleep, endstop);
+}
+
+void EasyStepper::init(int dir, int step, int ms1, int ms2, int sleep, int endstop) {
 	pinMode(dir, OUTPUT);
 	pinMode(step, OUTPUT);
 	pinMode(ms1, OUTPUT);
@@ -18,6 +26,7 @@ EasyStepper::EasyStepper(int dir, int step, int ms1, int ms2, int sleep) {
 	mMs1 = ms1;
 	mMs2 = ms2;
 	mSleep = sleep;
+	mEndStop = endstop;
 }
 
 void EasyStepper::setMaxSpeed(int maxSpeed) {
