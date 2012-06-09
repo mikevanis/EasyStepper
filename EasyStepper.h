@@ -38,9 +38,13 @@ public:
 	void setMicrostepping(int fraction);
 	void sleep(int state);
 	void step(int numOfSteps);
-	void update();
+	void stepTo(int pos);
 	void stepWithEasing(int numOfSteps, int type);
+	void update();
+	void setPosition(int pos);
+	
 	int readEndStop();
+	int isMoving();
 
 private:
 	void init(int dir, int step, int ms1, int ms2, int sleep, int endstop);
@@ -51,6 +55,7 @@ private:
 	unsigned long previous_timer;
 	unsigned long timer;
 	
+	// Internal pins
 	int mDir;
 	int mStep;
 	int mMs1;
@@ -66,6 +71,7 @@ private:
 	int _maxSpeed;
 	int currentSpeed;
 	int _easingDivider;
+	int currentPos;
 };
 
 #endif

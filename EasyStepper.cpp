@@ -57,6 +57,11 @@ void EasyStepper::step(int numOfSteps) {
 	}
 }
 
+void EasyStepper::stepTo(int pos) {
+	int steps = (currentPos*-1) + pos;
+	step(steps);
+}
+
 void EasyStepper::update() {
 	if((unsigned long)(micros() - previous_timer) >= 500) {
 		previous_timer = micros();
@@ -71,6 +76,10 @@ void EasyStepper::update() {
 		}
 		timer = (timer + 1) % 100;
 	}
+}
+
+void EasyStepper::setPosition(int pos) {
+	currentPos = pos;
 }
 
 void EasyStepper::stepWithEasing(int numOfSteps, int type) {
@@ -112,6 +121,15 @@ void EasyStepper::stepWithEasing(int numOfSteps, int type) {
 
 int EasyStepper::readEndStop() {
 	return analogRead(mEndStop);
+}
+
+int EasyStepper::isMoving() {
+	if(stepsRemaining != 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 int EasyStepper::MS1_MODE(int stepMode) {
