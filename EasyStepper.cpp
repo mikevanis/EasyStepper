@@ -49,10 +49,12 @@ void EasyStepper::setMicrostepping(int fraction) {
 void EasyStepper::step(int numOfSteps) {
 	if(numOfSteps < 0) {
 		digitalWrite(mDir, HIGH);
+		flippedDir = true;
 		stepsRemaining = -numOfSteps;
 	}
 	else {
 		digitalWrite(mDir, LOW);
+		flippedDir = false;
 		stepsRemaining = numOfSteps;
 	}
 }
@@ -71,6 +73,12 @@ void EasyStepper::update() {
 			if((timer+1) % _maxSpeed == 0) {
 				digitalWrite(mStep, LOW);
 				digitalWrite(mStep, HIGH);
+				if(flippedDir) {
+					currentPos--;
+				}
+				else {
+					currentPos++;
+				}
 				stepsRemaining--;
 			}
 		}

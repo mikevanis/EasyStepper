@@ -72,6 +72,7 @@ private:
 	int currentSpeed;
 	int _easingDivider;
 	int currentPos;
+	int flippedDir;
 };
 
 #endif
