@@ -27,6 +27,8 @@ void EasyStepper::init(int dir, int step, int ms1, int ms2, int sleep, int endst
 	mMs2 = ms2;
 	mSleep = sleep;
 	mEndStop = endstop;
+	
+	flippedMotor = 0;
 }
 
 void EasyStepper::setMaxSpeed(int maxSpeed) {
@@ -47,16 +49,36 @@ void EasyStepper::setMicrostepping(int fraction) {
 }
 
 void EasyStepper::step(int numOfSteps) {
-	if(numOfSteps < 0) {
-		digitalWrite(mDir, HIGH);
-		flippedDir = true;
-		stepsRemaining = -numOfSteps;
+	switch(flippedMotor) {
+		case 0:
+			if(numOfSteps < 0) {
+				digitalWrite(mDir, HIGH);
+				flippedDir = true;
+				stepsRemaining = -numOfSteps;
+			}
+			else {
+				digitalWrite(mDir, LOW);
+				flippedDir = false;
+				stepsRemaining = numOfSteps;
+			}
+			break;
+		case 1:
+			if(numOfSteps < 0) {
+				digitalWrite(mDir, LOW);
+				flippedDir = true;
+				stepsRemaining = -numOfSteps;
+			}
+			else {
+				digitalWrite(mDir, HIGH);
+				flippedDir = false;
+				stepsRemaining = numOfSteps;
+			}
+			break;
 	}
-	else {
-		digitalWrite(mDir, LOW);
-		flippedDir = false;
-		stepsRemaining = numOfSteps;
-	}
+}
+
+void EasyStepper::flipDirection() {
+	flippedMotor = 1;
 }
 
 void EasyStepper::stepTo(int pos) {

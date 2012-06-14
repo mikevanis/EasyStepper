@@ -42,6 +42,7 @@ public:
 	void stepWithEasing(int numOfSteps, int type);
 	void update();
 	void setPosition(int pos);
+	void flipDirection();
 	
 	int readEndStop();
 	int isMoving();
@@ -73,6 +74,7 @@ private:
 	int _easingDivider;
 	int currentPos;
 	int flippedDir;
+	int flippedMotor;
 };
 
 #endif
